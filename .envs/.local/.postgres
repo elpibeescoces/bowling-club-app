@@ -1,0 +1,7 @@
+# PostgreSQL
+# ------------------------------------------------------------------------------
+POSTGRES_HOST=postgres
+POSTGRES_PORT=5432
+POSTGRES_DB=bowling_club_app
+POSTGRES_USER=RjHVYRFZgPhHzOGRdhAwXdewHenkTEuH
+POSTGRES_PASSWORD=IWUk9seis2CecoQsBAABFpuULtY3L11Xh1GQnHm6ndTIEw58e1F7qN6ZYExYSeGl
