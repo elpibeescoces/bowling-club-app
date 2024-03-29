@@ -19,35 +19,31 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # linter:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout Code Repository
-  #       uses: actions/checkout@v4
-
-  #     - name: Set up Python
-  #       uses: actions/setup-python@v4
-  #       with:
-  #         python-version: '3.12'
-  #     # - name: Run pre-commit
-  #     #   uses: pre-commit/action@v3.0.0
-
-  # With no caching at all the entire ci process takes 3m to complete!
-  pytest:
+  deploy_to_aws:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout Code Repository
         uses: actions/checkout@v4
 
-      - name: Build the Stack
+      - name: Build the Docker Image
         run: docker compose -f local.yml build django
 
-      - name: Run DB Migrations
-        run: docker compose -f local.yml run --rm django python manage.py migrate
+      - name: Authenticate with AWS ECR
+        uses: aws-actions/amazon-ecr-login@v1
 
-      - name: Run Django Tests
-        run: docker compose -f local.yml run django pytest
+      - name: Push Docker Image to AWS ECR
+        run: |
+          aws ecr create-repository --repository-name my-repository-name --region us-east-1 || true
+          docker tag my-image-uri:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/my-repository-name:latest
+          docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/my-repository-name:latest
 
-      - name: Tear down the Stack
-        run: docker compose -f local.yml down
+      - name: Deploy to AWS Elastic Beanstalk
+        uses: einaregilsson/beanstalk-deploy@v14
+        with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          region: ${{ secrets.AWS_REGION }}
+          application_name: 'my-application'
+          environment_name: 'my-environment'
+          version_label: 'v${{ github.run_number }}'
+          deploy_to: 'all'
