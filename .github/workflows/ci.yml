@@ -33,6 +33,8 @@ jobs:
 
       - name: Authenticate with AWS ECR
         uses: aws-actions/amazon-ecr-login@v1
+        with:
+          region: ${{ secrets.AWS_REGION }} # Provide AWS region from secrets
 
       - name: Push Docker Image to AWS ECR
         run: |
