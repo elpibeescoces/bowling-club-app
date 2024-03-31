@@ -36,9 +36,9 @@ jobs:
 
       - name: Push Docker Image to AWS ECR
         run: |
-          aws ecr create-repository --repository-name my-repository-name --region us-east-1 || true
-          docker tag my-image-uri:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/alvabowlingclub-repository:latest
-          docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/alvabowlingclub-repository:latest
+          aws ecr create-repository --repository-name my-repository-name --region eu-north-1 || true
+          docker tag my-image-uri:latest 533267220516.dkr.ecr.eu-north-1.amazonaws.com/alvabowlingclub-repository:latest
+          docker push 533267220516.dkr.ecr.eu-north-1.amazonaws.com/alvabowlingclub-repository:latest
 
       - name: Deploy to AWS Elastic Beanstalk
         uses: einaregilsson/beanstalk-deploy@v14
