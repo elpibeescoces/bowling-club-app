@@ -57,4 +57,4 @@ jobs:
           region: ${{ secrets.AWS_REGION }}
           application_name: 'django'
           environment_name: 'django-env'
-          version_label: 'v0.0.0'
+          version_label: 'v${{ github.run_number }}'
