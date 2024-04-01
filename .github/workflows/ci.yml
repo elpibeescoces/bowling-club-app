@@ -36,7 +36,7 @@ jobs:
           docker-compose -f local.yml ps  # Check the status of all services defined in Docker Compose
       
       - name: Tag Docker Image
-        run: docker tag bowling_club_app_production_django:latest 533267220516.dkr.ecr.eu-north-1.amazonaws.com/alvabowlingclub-repository:latest
+        run: docker tag bowling_club_app_local_django:latest 533267220516.dkr.ecr.eu-north-1.amazonaws.com/alvabowlingclub-repository:latest
                
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
