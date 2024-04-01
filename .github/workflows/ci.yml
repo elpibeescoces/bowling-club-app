@@ -50,12 +50,11 @@ jobs:
           docker push 533267220516.dkr.ecr.eu-north-1.amazonaws.com/alvabowlingclub-repository:latest || echo "Docker push failed with exit code $?"
 
       - name: Deploy to AWS Elastic Beanstalk
-        uses: einaregilsson/beanstalk-deploy@v14
+        uses: einaregilsson/beanstalk-deploy@v21
         with:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_key: ${{ secrets.AWS_ACCESS_KEY }}
           region: ${{ secrets.AWS_REGION }}
           application_name: 'django'
           environment_name: 'django-env'
-          version_label: 'v${{ github.run_number }}'
-          deploy_to: 'all'
+          version_label: 'v0.0.0'
