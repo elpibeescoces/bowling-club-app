@@ -36,15 +36,14 @@ jobs:
           docker-compose -f local.yml ps  # Check the status of all services defined in Docker Compose
       
       - name: Tag Docker Image
-        run: docker tag bowling_club_app_production_django:latest 533267220516.dkr.ecr.eu-north-1.amazonaws.com/alvabowlingclub-repository:latest        
+        run: docker tag bowling_club_app_production_django:latest 533267220516.dkr.ecr.eu-north-1.amazonaws.com/alvabowlingclub-repository:latest
+               
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_ACCESS_KEY }}
           aws-region: eu-north-1
-      - name: Authenticate with AWS ECR
-        uses: aws-actions/amazon-ecr-login@v2
 
       - name: Push Docker Image to AWS ECR
         run: |
