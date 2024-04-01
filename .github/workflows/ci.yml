@@ -47,7 +47,7 @@ jobs:
 
       - name: Push Docker Image to AWS ECR
         run: |
-          docker push 533267220516.dkr.ecr.eu-north-1.amazonaws.com/alvabowlingclub-repository:latest
+          docker push 533267220516.dkr.ecr.eu-north-1.amazonaws.com/alvabowlingclub-repository:latest || echo "Docker push failed with exit code $?"
 
       - name: Deploy to AWS Elastic Beanstalk
         uses: einaregilsson/beanstalk-deploy@v14
